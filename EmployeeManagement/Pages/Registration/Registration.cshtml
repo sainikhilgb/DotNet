@@ -1,0 +1,63 @@
+@page
+@model EmplyoeeManagement.Pages.Registration.RegistrationModel
+@{
+    ViewData["Title"] = "Register Employee";
+}
+
+<h1>Register Employee</h1>
+
+<form method="post">
+    <div>
+        <label asp-for="Employee.EmployeeId"></label>
+        <input asp-for="Employee.EmployeeId" class="form-control" />
+        <span asp-validation-for="Employee.EmployeeId" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Employee.FirstName"></label>
+        <input asp-for="Employee.FirstName" class="form-control" />
+        <span asp-validation-for="Employee.FirstName" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Employee.LastName"></label>
+        <input asp-for="Employee.LastName" class="form-control" />
+        <span asp-validation-for="Employee.LastName" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Employee.Email"></label>
+        <input asp-for="Employee.Email" type="email" class="form-control" />
+        <span asp-validation-for="Employee.Email" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Employee.Phone"></label>
+        <input asp-for="Employee.Phone" class="form-control" />
+        <span asp-validation-for="Employee.Phone" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Employee.Grade"></label>
+        <select asp-for="Employee.Grade" asp-items="Model.GradeOptions" class="form-control"></select>
+        <span asp-validation-for="Employee.Grade" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Employee.BU"></label>
+        <select asp-for="Employee.BU" asp-items="Model.BUOptions" class="form-control"></select>
+        <span asp-validation-for="Employee.BU" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Employee.DateOfHire"></label>
+        <input asp-for="Employee.DateOfHire" type="date" class="form-control" />
+        <span asp-validation-for="Employee.DateOfHire" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
