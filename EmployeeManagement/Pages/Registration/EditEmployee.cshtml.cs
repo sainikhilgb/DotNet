@@ -4,11 +4,10 @@ using EmplyoeeManagement.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using OfficeOpenXml;
 using System.IO;
-using System.Threading.Tasks;
 
 namespace EmplyoeeManagement.Pages.Registration
 {
-    public class RegistrationModel : PageModel
+    public class EditModel : PageModel
     {
         [BindProperty]
         public Employee Employee { get; set; }
@@ -16,58 +15,30 @@ namespace EmplyoeeManagement.Pages.Registration
         public List<SelectListItem> GradeOptions { get; set; }
         public List<SelectListItem> BUOptions { get; set; }
 
-       public void OnGet()
-{
-    LoadDropdownOptions();
+        public void OnGet(int id)
+        {
+            LoadDropdownOptions();
+            // Fetch the employee to be edited using the ID
+            Employee = GetEmployeeById(id);
+        }
 
-    // Ensure the Employee object is initialized
-    Employee ??= new Employee();
-}
-
-
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost(int id)
         {
             if (!ModelState.IsValid)
             {
-                OnGet(); // Reload dropdown options
+                LoadDropdownOptions();
                 return Page();
             }
 
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "EmployeeData.xlsx");
 
-            try
+            using (var package = new ExcelPackage(new FileInfo(filePath)))
             {
-                using (var package = new ExcelPackage())
+                var worksheet = package.Workbook.Worksheets["Employees"];
+
+                var row = FindEmployeeRow(worksheet, id);
+                if (row != -1)
                 {
-                    if (System.IO.File.Exists(filePath))
-                    {
-                        using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))
-                        {
-                            package.Load(fileStream);
-                        }
-                    }
-                    else
-                    {
-                        package.Workbook.Worksheets.Add("Employees");
-                    }
-
-                    var worksheet = package.Workbook.Worksheets["Employees"];
-
-                    if (worksheet.Dimension == null)
-                    {
-                        worksheet.Cells[1, 1].Value = "ID";
-                        worksheet.Cells[1, 2].Value = "First Name";
-                        worksheet.Cells[1, 3].Value = "Last Name";
-                        worksheet.Cells[1, 4].Value = "Email";
-                        worksheet.Cells[1, 5].Value = "Phone";
-                        worksheet.Cells[1, 6].Value = "Position";
-                        worksheet.Cells[1, 7].Value = "Department";
-                        worksheet.Cells[1, 8].Value = "Date of Hire";
-                    }
-
-                    var row = worksheet.Dimension?.Rows + 1 ?? 2;
-
-                    worksheet.Cells[row, 1].Value = Employee.EmployeeId;
                     worksheet.Cells[row, 2].Value = Employee.FirstName;
                     worksheet.Cells[row, 3].Value = Employee.LastName;
                     worksheet.Cells[row, 4].Value = Employee.Email;
@@ -75,18 +46,50 @@ namespace EmplyoeeManagement.Pages.Registration
                     worksheet.Cells[row, 6].Value = Employee.Grade;
                     worksheet.Cells[row, 7].Value = Employee.BU;
                     worksheet.Cells[row, 8].Value = Employee.DateOfHire.ToShortDateString();
-
-                    await package.SaveAsAsync(new FileInfo(filePath));
                 }
 
-                return RedirectToPage("EmployeeList");
+                package.Save();
             }
-            catch (Exception)
+
+            return RedirectToPage("EmployeeList");
+        }
+
+        private Employee GetEmployeeById(int id)
+        {
+            // Fetch employee data from the Excel sheet based on the ID
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "EmployeeData.xlsx");
+            using (var package = new ExcelPackage(new FileInfo(filePath)))
             {
-                ModelState.AddModelError(string.Empty, "An error occurred while saving the data.");
-                OnGet(); // Reload dropdown options
-                return Page();
+                var worksheet = package.Workbook.Worksheets["Employees"];
+                var row = FindEmployeeRow(worksheet, id);
+                if (row != -1)
+                {
+                    return new Employee
+                    {
+                        EmployeeId = id,
+                        FirstName = worksheet.Cells[row, 2].Text,
+                        LastName = worksheet.Cells[row, 3].Text,
+                        Email = worksheet.Cells[row, 4].Text,
+                        Phone = worksheet.Cells[row, 5].Text,
+                        Grade = worksheet.Cells[row, 6].Text,
+                        BU = worksheet.Cells[row, 7].Text,
+                        DateOfHire = DateTime.Parse(worksheet.Cells[row, 8].Text)
+                    };
+                }
             }
+            return null;
+        }
+
+        private int FindEmployeeRow(ExcelWorksheet worksheet, int id)
+        {
+            for (int row = 2; row <= worksheet.Dimension.End.Row; row++)
+            {
+                if (worksheet.Cells[row, 1].Text == id.ToString())
+                {
+                    return row;
+                }
+            }
+            return -1;
         }
 
         private void LoadDropdownOptions()

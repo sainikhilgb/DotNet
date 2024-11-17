@@ -42,3 +42,4 @@ C:\Users\sgodlave\OneDrive - Capgemini\Documents\DotNet\Employee\EmployeeManagem
 C:\Users\sgodlave\OneDrive - Capgemini\Documents\DotNet\Employee\EmployeeManagement\obj\Debug\net8.0\EmplyoeeManagement.pdb
 C:\Users\sgodlave\OneDrive - Capgemini\Documents\DotNet\Employee\EmployeeManagement\obj\Debug\net8.0\EmplyoeeManagement.genruntimeconfig.cache
 C:\Users\sgodlave\OneDrive - Capgemini\Documents\DotNet\Employee\EmployeeManagement\obj\Debug\net8.0\ref\EmplyoeeManagement.dll
+C:\Users\sgodlave\OneDrive - Capgemini\Documents\DotNet\Employee\EmployeeManagement\obj\Debug\net8.0\EmplyoeeManagement.sourcelink.json

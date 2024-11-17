@@ -1,10 +1,10 @@
-@page
-@model EmplyoeeManagement.Pages.Registration.RegistrationModel
+@page "{id:int}"
+@model EmplyoeeManagement.Pages.Registration.EditModel
 @{
-    ViewData["Title"] = "Registration";
+    ViewData["Title"] = "Edit Employee";
 }
 
-<h2>Register New Employee</h2>
+<h2>Edit Employee</h2>
 
 <form method="post">
     <div class="form-group">
@@ -15,10 +15,6 @@
     <div class="form-group">
         <label for="FirstName">First Name</label>
         <input type="text" id="FirstName" name="Employee.FirstName" class="form-control" value="@Model.Employee.FirstName" />
-        @if (ViewData.ModelState.ContainsKey("Employee.FirstName"))
-        {
-            <span class="text-danger">@ViewData.ModelState["Employee.FirstName"].Errors[0].ErrorMessage</span>
-        }
     </div>
 
     <div class="form-group">
@@ -36,7 +32,7 @@
         <input type="text" id="Phone" name="Employee.Phone" class="form-control" value="@Model.Employee.Phone" />
     </div>
 
-   <div class="col-6 form-group">
+    <div class="col-6 form-group">
     <label asp-for="Employee.Grade"></label>
     <select asp-for="Employee.Grade" class="form-control" asp-items="Model.GradeOptions"></select>
     <span asp-validation-for="Employee.Grade" class="text-danger"></span>
@@ -54,7 +50,7 @@
     </div>
 
     <div class="form-group">
-        <button type="submit" class="btn btn-primary">@((Model.Employee.EmployeeId == 0) ? "Register" : "Save Changes")</button>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
     </div>
 </form>
 
