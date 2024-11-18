@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/EmplyoeeManagement.styles.css" asp-append-version="true" />
+    @* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> *@
 </head>
 <body>
     <header>
@@ -20,7 +21,7 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/Registration/Registration">Register</a>
+                            <a class="nav-link text-dark"  asp-page="/Registration/Registration">Register</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-page="/Registration/EmployeeList">View Registered Employees</a>
@@ -31,6 +32,18 @@
             </div>
         </nav>
     </header>
+
+    @* <div class="icon-bar">
+        <a class="active" asp-area="" asp-page="/Index">Emplyoee Management Portal</a>
+        <a  asp-page="/Registration/Registration">Register</a>
+        <a  asp-page="/Registration/EmployeeList">View Registered Employees</a>
+    </div> *@
+  
+  @* <a href="#"><i class="fa fa-search"></i></a>
+  <a href="#"><i class="fa fa-envelope"></i></a>
+  <a href="#"><i class="fa fa-globe"></i></a>
+  <a href="#"><i class="fa fa-trash"></i></a> *@
+</div>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

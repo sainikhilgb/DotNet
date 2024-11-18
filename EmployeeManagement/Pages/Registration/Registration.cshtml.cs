@@ -3,8 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using EmplyoeeManagement.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using OfficeOpenXml;
-using System.IO;
-using System.Threading.Tasks;
+
 
 namespace EmplyoeeManagement.Pages.Registration
 {
@@ -60,8 +59,8 @@ namespace EmplyoeeManagement.Pages.Registration
                         worksheet.Cells[1, 3].Value = "Last Name";
                         worksheet.Cells[1, 4].Value = "Email";
                         worksheet.Cells[1, 5].Value = "Phone";
-                        worksheet.Cells[1, 6].Value = "Position";
-                        worksheet.Cells[1, 7].Value = "Department";
+                        worksheet.Cells[1, 6].Value = "Grade";
+                        worksheet.Cells[1, 7].Value = "BU";
                         worksheet.Cells[1, 8].Value = "Date of Hire";
                     }
 
@@ -93,20 +92,24 @@ namespace EmplyoeeManagement.Pages.Registration
         {
             GradeOptions = new List<SelectListItem>
             {
-                new SelectListItem { Value = "Manager", Text = "Manager" },
-                new SelectListItem { Value = "Developer", Text = "Developer" },
-                new SelectListItem { Value = "Designer", Text = "Designer" },
-                new SelectListItem { Value = "Analyst", Text = "Analyst" },
-                new SelectListItem { Value = "Sales", Text = "Sales" }
+                new SelectListItem { Value = "A3", Text = "A3" },
+                new SelectListItem { Value = "A4", Text = "A4" },
+                new SelectListItem { Value = "A5", Text = "A5" },
+                new SelectListItem { Value = "B1", Text = "B1" },
+                new SelectListItem { Value = "B2", Text = "B2" },
+                new SelectListItem { Value = "C1", Text = "C1" },
+                new SelectListItem { Value = "C2", Text = "C2" },
+                new SelectListItem { Value = "D1", Text = "D1" },
+                new SelectListItem { Value = "D2", Text = "D2" }
             };
 
             BUOptions = new List<SelectListItem>
             {
-                new SelectListItem { Value = "IT", Text = "IT" },
-                new SelectListItem { Value = "HR", Text = "HR" },
-                new SelectListItem { Value = "Finance", Text = "Finance" },
-                new SelectListItem { Value = "Marketing", Text = "Marketing" },
-                new SelectListItem { Value = "Operations", Text = "Operations" }
+                new SelectListItem { Value = "C&CA", Text = "C&CA" },
+                new SelectListItem { Value = "FS", Text = "FS" },
+                new SelectListItem { Value = "Sogeti", Text = "Sogeti" },
+                new SelectListItem { Value = "Infra", Text = "Infra" },
+                new SelectListItem { Value = "Digital", Text = "Digital" }
             };
         }
     }
